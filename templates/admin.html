@@ -16,6 +16,9 @@
     </div>
     <div class="container">
         <h1 class="text-center">Dashboard</h1>
+        {% if products.total == 0 %}
+        <p>Your store is empty.</p>
+        {% else %}
         <table class="table table-striped mt-3">
             <th>S#</th>
             <th>Name</th>
@@ -62,6 +65,7 @@
 </div>
             {% endfor %}
         </table>
+        {% endif %}
     </div>
 </div>
 {% include "footer.html" %}
