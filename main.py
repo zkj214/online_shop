@@ -38,10 +38,10 @@ def load_user(user_id):
     return db.session.execute(db.select(User).where(User.id==user_id)).scalar()
 
 
-class User(db.Model,UserMixin):
+class User(UserMixin,db.Model):
     id=db.Column(db.Integer,primary_key=True)
-    first_name=db.Column(db.String(50),unique=False,nullable=False)
-    last_name = db.Column(db.String(50), unique=False, nullable=False)
+    firstname=db.Column(db.String(50),unique=False,nullable=False)
+    lastname = db.Column(db.String(50), unique=False, nullable=False)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email=db.Column(db.String(50),unique=True,nullable=False)
     password=db.Column(db.String(50),unique=False,nullable=False)
@@ -388,7 +388,7 @@ def register():
                         user_photo.save(file_path)
 
                         hashed_and_salted_password = generate_password_hash(password, method="scrypt", salt_length=8)
-                        new_user = User(first_name=fname, last_name=lname, username=username,email=email, password=hashed_and_salted_password,
+                        new_user = User(firstname=fname, lastname=lname, username=username,email=email, password=hashed_and_salted_password,
                                         address=address,state=state,country=country,zipcode=zipcode,profile_pic=file_name)
                         db.session.add(new_user)
                         db.session.commit()
