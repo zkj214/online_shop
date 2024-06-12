@@ -44,12 +44,12 @@ class User(UserMixin,db.Model):
     last_name = db.Column(db.String(50), unique=False, nullable=False)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email=db.Column(db.String(50),unique=True,nullable=False)
-    password=db.Column(db.String(50),unique=False,nullable=False)
+    password=db.Column(db.String(200),unique=True,nullable=False)
     address=db.Column(db.Text,nullable=False)
     state=db.Column(db.String(50),nullable=False)
     country=db.Column(db.String(150),nullable=False)
     zipcode=db.Column(db.Integer,nullable=False)
-    profile_pic=db.Column(db.String(150),unique=False,nullable=False)
+    profile_pic=db.Column(db.String(150),unique=True,nullable=False)
 
 
 class Brand(db.Model):
@@ -386,17 +386,19 @@ def register():
                         file_name = secrets.token_hex(10) + filename.split('.')[1]
                         file_path = os.path.join(img_dir, file_name)
                         user_photo.save(file_path)
-
-                        hashed_and_salted_password = generate_password_hash(password, method="scrypt", salt_length=8)
-                        new_user = User(first_name=fname, last_name=lname, username=username,email=email, password=hashed_and_salted_password,
-                                        address=address,state=state,country=country,zipcode=zipcode,profile_pic=file_name)
-                        db.session.add(new_user)
-                        db.session.commit()
-                        flash(f"Congrats, {fname.title()}! You are now registered.")
-                        return redirect(url_for('login'))
                     else:
                         flash("Wrong file. Please upload an image.")
                         return redirect(url_for("register"))
+
+                    hashed_and_salted_password = generate_password_hash(password, method="scrypt", salt_length=8)
+                    new_user = User(first_name=fname, last_name=lname, username=username, email=email,
+                                    password=hashed_and_salted_password,
+                                    address=address, state=state, country=country, zipcode=zipcode,
+                                    profile_pic=file_name)
+                    db.session.add(new_user)
+                    db.session.commit()
+                    flash(f"Congrats, {fname.title()}! You are now registered.")
+                    return redirect(url_for('login'))
     return render_template("register.html",year=current_yr)
 
 
