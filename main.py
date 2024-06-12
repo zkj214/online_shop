@@ -40,11 +40,11 @@ def load_user(user_id):
 
 class User(db.Model,UserMixin):
     id=db.Column(db.Integer,primary_key=True)
-    first_name=db.Column(db.String(100),unique=False,nullable=False)
-    last_name = db.Column(db.String(100), unique=False, nullable=False)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    email=db.Column(db.String(100),unique=True,nullable=False)
-    password=db.Column(db.String(100),unique=False,nullable=False)
+    first_name=db.Column(db.String(50),unique=False,nullable=False)
+    last_name = db.Column(db.String(50), unique=False, nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email=db.Column(db.String(50),unique=True,nullable=False)
+    password=db.Column(db.String(50),unique=False,nullable=False)
     address=db.Column(db.Text,nullable=False)
     state=db.Column(db.String(50),nullable=False)
     country=db.Column(db.String(150),nullable=False)
