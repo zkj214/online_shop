@@ -15,7 +15,7 @@
         {% endwith %}
     </div>
     <div class="container">
-        {% if products|length == 0 %}
+        {% if products.total == 0 %}
         <h3 class="text-center mt-2">No products available.</h3>
         {% else %}
         <div class="row">
