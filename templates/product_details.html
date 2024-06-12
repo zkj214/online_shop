@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Product Details{% endblock %}
+
+{% block content %}
+{% include "header.html" %}
+<div class="wrapper">
+    {% include "navigation2.html" %}
+    <div class="container">
+        {% with messages=get_flashed_messages() %}
+            {% if messages: %}
+                {% for message in messages: %}
+                    <p class="alert alert-success" role="alert" style="margin-top: 10px;">{{message}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="row mt-5">
+            <div class="col-md-6" id="prod_img">
+                <img src="{{url_for('static',filename='images/products/' + product.image_1)}}" width="400" height="400" alt="{{product.name}}">
+            </div>
+            <div class="col-md-6">
+                <h4>{{product.name}}</h4>
+                <hr>
+                <b>Price:</b> ${{product.price}}<br>
+                {% if product.discount > 1: %}
+                <b>Discount:</b> {{product.discount}}%<br>
+                {% endif %}
+                <b>Description:</b><br>
+                <p>{{product.description}}</p>
+                <form action="{{url_for('add2cart')}}" method="post">
+                    <input type="hidden" name="product_id" value="{{product.id}}">
+                    <button type="submit" class="btn btn-warning">Add To Cart</button>
+                    <label style="width:80px; margin-left: 10px;">Quantity:</label>
+                    <input type="number" name="quantity" min="1" max="{{product.stock}}" style="width:50px;" value="1">
+                    <label style="width:60px;">Colors:</label>
+                    <select name="color">
+                        {% set colors = product.colors.split(',') %}
+                        {% for color in colors: %}
+                        <option value="{{color}}">{{color.title()}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <hr>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6 thumbnail" id="thumb_img">
+                <img src="{{url_for('static',filename='images/products/' + product.image_1)}}" width="120" height="120" class="p-3">
+                <img src="{{url_for('static',filename='images/products/' + product.image_2)}}" width="120" height="120" class="p-3">
+                <img src="{{url_for('static',filename='images/products/' + product.image_3)}}" width="120" height="120" class="p-3">
+            </div>
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
+<script>
+    prod_img=document.getElementById("prod_img");
+    thumb_img=document.getElementById("thumb_img").getElementsByTagName("img");
+
+    for(i=0;i<thumb_img.length;i++)
+    {
+        thumb_img[i].addEventListener("click",full_image);
+    }
+
+    function full_image()
+    {
+        ImgSRC=this.getAttribute("src");
+        prod_img.innerHTML="<img src='"+ImgSRC+"' width='400' height='400'>";
+    }
+</script>
+{% endblock %}

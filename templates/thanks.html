@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Thank U{% endblock %}
+
+{% block content %}
+{% include "header.html" %}
+<div class="wrapper">
+    {% include "navigation2.html" %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 mt-5">
+                <h2>Thank you for shopping with us!</h2>
+                <p><a class="mt-3" href="{{url_for('home')}}" style="text-decoration: underline; color: blue;">Continue shopping>>></a></p>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+    </div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

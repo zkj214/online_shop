@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+{% block title %}Add Category{% endblock %}
+
+{% block content %}
+{%  include "header.html" %}
+<div class="wrapper">
+    {% include "navigation.html" %}
+<h1 class="text-center my-5">Add A Category</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% with messages=get_flashed_messages() %}
+            {% if messages: %}
+                {% for message in messages %}
+                    {% if is_exist: %}
+                    <p class="alert alert-info" role="alert">{{message}}</p>
+                    {% else: %}
+                    <p class="alert alert-success" role="alert">{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+            {{render_form(form)}}
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

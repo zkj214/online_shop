@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+{% block title %}Online Shop{% endblock %}
+
+{% block content %}
+{% include "header.html" %}
+<div class="wrapper">
+<div class="container">
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 card p-2">
+        <div class="card-body">
+        {% with messages= get_flashed_messages() %}
+     {% if messages: %}
+        {% for message in messages: %}
+            {% if is_error: %}
+            <p class="alert alert-danger" role="alert">{{message}}</p>
+            {% else %}
+            <p class="alert alert-info" role="alert">{{message}}</p>
+            {% endif %}
+        {% endfor %}
+     {% endif %}
+    {% endwith %}
+        {{render_form(form)}}
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+</div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

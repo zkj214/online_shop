@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+{% include "header.html" %}
+<div class="wrapper">
+    {% include "navigation.html" %}
+<div class="container">
+  <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+          <div class="text-center my-3 bg-info p-1"><h1>Add A Product</h1></div>
+          {% with messages=get_flashed_messages() %}
+              {% if messages: %}
+                  {% for message in messages: %}
+                      {% if is_error: %}
+                      <p class="alert alert-danger" role="alert">{{message}}</p>
+                      {% else: %}
+                      <p class="alert alert-success" role="alert">{{message}}</p>
+                      {% endif %}
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+          <form action="{{url_for('add_product')}}" method="post" enctype="multipart/form-data" class="product-form">
+          <label>Name:</label><br><input type="text" name="name" placeholder="Add product name" required><br>
+          <label>Price:</label><br><input type="number" name="price" step="0.01" style="width:100px;" placeholder="Add price" required><br>
+          <label>Discount:</label><br><input type="number" name="discount" value="0" style="width:50px;">%<br>
+          <label>Stock:</label><br><input type="number" name="stock" placeholder="No. of product stock" required><br>
+          <label>Description:</label><br><textarea name="description" cols="50" rows="5" placeholder="Add product details" required></textarea><br>
+          <label>Colors:<textarea name="colors" placeholder="Add product colors" required></textarea><br>
+              <label>Brand:</label>
+          <select name="brand" required>
+              <option value="">--Select Brand--</option>
+              {% for brand in brands: %}
+              <option value="{{brand.id}}">{{brand.name}}</option>
+              {% endfor %}
+          </select>
+              <label>Category:</label>
+          <select name="category" required>
+              <option value="">--Select Category--</option>
+              {% for category in categories: %}
+              <option value="{{category.id}}">{{category.name}}</option>
+              {% endfor %}
+          </select>
+           <label>Image 1</label><input type="file" name="image_1" required>
+            <label>Image 2</label><input type="file" name="image_2" required>
+            <label>Image 3</label><input type="file" name="image_3" required>
+              <button type="submit" class="btn btn-outline-info mt-3">Add</button>
+          </form>
+
+      </div>
+      <div class="col-md-2"></div>
+  </div>
+</div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

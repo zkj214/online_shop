@@ -1,0 +1,11 @@
+<div class="header text-white bg-primary p-2">
+    <div class="logo"><h1>🛍️Shoppers</h1></div>
+    <div class="links py-3">
+        {% if not logged_in: %}
+       <a  href="{{url_for('login')}}">Sign In</a> |
+        <a href="{{url_for('register')}}">Register</a>
+        {% else %}
+        <a href="{{url_for('logout')}}">Logout</a>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+         <a class="navbar-brand">Seller</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{url_for('admin')}}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('display_brands')}}">Brands</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('display_categories')}}">Categories</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Add Up
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{url_for('add_product')}}">Add Product</a></li>
+                <li><a class="dropdown-item" href="{{url_for('add_brand')}}">Add Brand</a></li>
+                <li><a class="dropdown-item" href="{{url_for('add_category')}}">Add Category</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('home')}}" style="float: right;">Home</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>

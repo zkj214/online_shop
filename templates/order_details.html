@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Cart Items{% endblock %}
+
+{% block content %}
+{% include "header.html" %}
+<div class="wrapper">
+    {% include "navigation2.html" %}
+    <div class="container">
+        <br>
+        <b>Invoice:</b> {{invoice}}
+        <br>
+        <b>Name:</b> {{customer.first_name|capitalize}} {{customer.last_name|capitalize}}
+        <br>
+        <b>Email:</b> {{customer.email}}
+        <br>
+        <b>Status:</b> {{order.status}}
+        <table class="table table-sm mt-3">
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Subtotal</th>
+            {% for key,value in order.items.items(): %}
+            <tr>
+                <td>{{value.name}}</td>
+                <td>{{value.quantity}}</td>
+                <td>{{value.color}}</td>
+                <td>${{value.price}}</td>
+                {% if value.discount > 1 %}
+                <td>{{value.discount}}%</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% set subtotal = value.price|float * value.quantity|int %}
+                {% set discount = subtotal * (value.discount|int / 100) %}
+                <td>${{ "{:,.2f}".format(subtotal - discount) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <table class="table table-sm table-borderless">
+             <tr>
+                <td><b>Amount: ${{"{:,.2f}".format(amount)}}</b></td>
+                <td><b>Tax: ${{"{:,.2f}".format(tax)}}</b></td>
+                 <td width="250"></td>
+                <td><h4>Total: ${{ total }}</h4></td>
+                <td width="100"></td>
+                 <td></td>
+                 <form action="{{url_for('order_details_as_pdf',invoice=order.invoice)}}" method="post">
+                     <td><button type="submit" class="btn btn-info btn-sm">Invoice</button></td>
+                 </form>
+                 {% if order.status == "paid" %}
+                 <td></td>
+                 {% else %}
+                 <td>
+                     {% set total = total.replace('.','') %}
+                     <form action="{{url_for('get_payment')}}" method="POST">
+                         <input type="hidden" name="invoice" value="{{order.invoice}}">
+                         <input type="hidden" name="amount" value="{{total}}">
+  <script
+    src="https://checkout.stripe.com/checkout.js"
+    class="stripe-button"
+    data-key="pk_test_51PQGp2DFu3lxZP5FxD4X37oBVO9Tz32ySgkTWxSMCYxz9p4znxv3VJHVbOqwTQtjw4Oa5ZRN8KOQLVDBN1IpYAmG00vD0tY0D7"
+
+
+    data-name="Shoppers Payment System"
+    data-description=""
+    data-amount="{{total}}"
+    data-currency="usd">
+  </script>
+</form>
+                 </td>
+                 {% endif %}
+            </tr>
+        </table>
+    </div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

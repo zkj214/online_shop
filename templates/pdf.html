@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Order Invoice{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="container">
+        <div><h1>Shoppers</h1>
+            <hr>
+        </div>
+        <br>
+        <b style="float: right;">Invoice: {{invoice}}</b>
+        <br>
+        <b>Name:</b> {{customer.first_name|capitalize}} {{customer.last_name|capitalize}}
+        <br>
+        <b>Email:</b> {{customer.email}}
+        <br>
+        <b>Status:</b> {{order.status}}
+        <table class="table table-sm mt-3">
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Subtotal</th>
+            {% for key,value in order.items.items(): %}
+            <tr>
+                <td>{{value.name}}</td>
+                <td>{{value.quantity}}</td>
+                <td>{{value.color}}</td>
+                <td>${{value.price}}</td>
+                {% if value.discount > 1 %}
+                <td>{{value.discount}}%</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% set subtotal = value.price|float * value.quantity|int %}
+                {% set discount = subtotal * (value.discount|int / 100) %}
+                <td>${{ "{:,.2f}".format(subtotal - discount) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <table class="table table-sm table-borderless">
+             <tr>
+                <td><b>Amount: ${{"{:,.2f}".format(amount)}}</b></td>
+                <td><b>Tax: ${{"{:,.2f}".format(tax)}}</b></td>
+                 <td width="250"></td>
+                <td><h4>Total: ${{ "{:,.2f}".format(total) }}</h4></td>
+                <td width="100"></td>
+                 <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
