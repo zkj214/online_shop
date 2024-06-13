@@ -233,7 +233,7 @@ def cart_items():
 
     all_categories = list(db.session.execute(db.select(Category)).scalars())
 
-    if len(session["shopping_cart"])==0:
+    if "shopping_cart" not in session:
         flash("Your cart is empty.")
         return redirect(url_for("home"))
     else:
