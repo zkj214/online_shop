@@ -128,14 +128,14 @@ def login():
         if user:
             if not check_password_hash(user.password,form.password.data):
                 flash("Sorry, wrong password. Pls try again.")
-                return render_template("index.html", form=form, is_error=True)
+                return render_template("index.html", year=current_yr,form=form, is_error=True)
             else:
                 login_user(user)
                 flash(f"Welcome, {user.username}! Your have successfully logged in.")
                 return redirect(url_for("home"))
         else:
             flash("Oops! Wrong email and password.")
-            return render_template("index.html",form=form,is_error=True)
+            return render_template("index.html",year=current_yr,form=form,is_error=True)
     return render_template("index.html",form=form,year=current_yr)
 
 
