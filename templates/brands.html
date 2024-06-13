@@ -16,6 +16,9 @@
    </div>
    <div class="container">
        <div class="text-center my-3"><h1>Brands</h1></div>
+        {% if brands|length == 0 %}
+        <h5>No brands listed in the database.</h5>
+        {% else %}
        <table class="table table-striped mt-3 table-sm">
             <th>S#</th>
             <th>Name</th>
@@ -52,6 +55,7 @@
 </div>
         {% endfor %}
         </table>
+       {% endif %}
    </div>
 </div>
 {% include "footer.html" %}
