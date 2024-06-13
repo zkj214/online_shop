@@ -204,7 +204,7 @@ def add2cart():
     item_dict={id:{"name":product.name,"price":product.price,"discount":product.discount,"quantity":quantity,"color":color,"image":product.image_1, "stock":product.stock,"colors":product.colors}}
 
     if request.method=="POST":
-        if "shopping_cart" in session:  # if the cart exist, do this
+        if "shopping_cart" in session:  # if the cart exists, do this
             if id in session["shopping_cart"]:
                 for key, value in session["shopping_cart"].items():
                     if key == id:
