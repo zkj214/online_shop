@@ -707,7 +707,6 @@ def add_product():
 
         if img1.endswith(".jpg") or img1.endswith(".gif") or img1.endswith(".jpeg") or img1.endswith(".png"):
             img_1 = secrets.token_hex(10) + '.' + img1.split('.')[1]
-            file1.save(os.path.join(img_dir, img_1))
         else:
             flash("Wrong file. Pls upload an image.")
             return render_template("add_product.html", year=current_yr, brands=all_brands, categories=all_categories,
@@ -715,7 +714,6 @@ def add_product():
 
         if img2.endswith(".jpg") or img2.endswith(".gif") or img2.endswith(".jpeg") or img2.endswith(".png"):
             img_2 = secrets.token_hex(10) + '.' + img2.split('.')[1]
-            file2.save(os.path.join(img_dir, img_2))
         else:
             flash("Wrong file. Pls upload an image.")
             return render_template("add_product.html", year=current_yr, brands=all_brands, categories=all_categories,
@@ -723,11 +721,14 @@ def add_product():
 
         if img3.endswith(".jpg") or img3.endswith(".gif") or img3.endswith(".jpeg") or img3.endswith(".png"):
             img_3 = secrets.token_hex(10) + '.' + img3.split('.')[1]
-            file3.save(os.path.join(img_dir, img_3))
         else:
             flash("Wrong file. Pls upload an image.")
             return render_template("add_product.html", year=current_yr, brands=all_brands, categories=all_categories,
                                    is_error=True, logged_in=current_user.is_authenticated)
+
+        file1.save(os.path.join(img_dir, img_1))
+        file2.save(os.path.join(img_dir, img_2))
+        file3.save(os.path.join(img_dir, img_3))
 
         new_product=Product(name=name,price=price,discount=discount,stock=stock,description=desc,
                 colors=colors,brand_id=brand_id,category_id=category_id,image_1=img_1,image_2=img_2,image_3=img_3)
