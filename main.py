@@ -382,7 +382,7 @@ def register():
                     filename = secure_filename(user_photo.filename)
 
                     if filename.endswith(".jpg") or filename.endswith(".jpeg") or filename.endswith(".gif") or filename.endswith(".png"):
-                        img_dir = "static/images/profile_pic/"
+                        img_dir = "static/images/profile_pic"
                         file_name = secrets.token_hex(10) + filename.split('.')[1]
                         file_path = os.path.join(img_dir, file_name)
                         user_photo.save(file_path)
@@ -611,7 +611,7 @@ def edit_product(product_id):
 
     requested_product=db.session.execute(db.select(Product).where(Product.id==product_id)).scalar()
 
-    img_dir="static/images/products/"
+    img_dir="static/images/products"
 
     if request.method=="POST":
         requested_product.name=request.form.get("name")
@@ -686,7 +686,7 @@ def add_product():
     data = db.session.execute(db.select(Category).order_by(Category.name))
     all_categories = list(data.scalars())
 
-    img_dir="static/images/products/"
+    img_dir="static/images/products"
 
     if request.method=="POST":
         name=request.form.get("name")
@@ -741,7 +741,7 @@ def add_product():
 
 @app.route("/delete_product/<int:id>",methods=["POST"])
 def delete_product(id):
-    img_dir = "static/images/products/"
+    img_dir = "static/images/products"
     if request.method=="POST":
         product=db.session.execute(db.select(Product).where(Product.id==id)).scalar()
         os.unlink(os.path.join(img_dir,product.image_1))
